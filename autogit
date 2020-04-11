@@ -1,0 +1,16 @@
+#!/bin/bash
+COMMIT_ARG=$1
+COMMIT_MSG="autoupdate"
+
+if [ -z "$1" ]
+  then
+    COMMIT_ARG=$COMMIT_MSG
+fi
+echo "+++++++START!+++++++"
+echo "GIT ADD ....."
+git add .
+echo "GIT COMMIT WITH ARGUMENT $COMMIT_ARG"
+git commit -m '$COMMIT_ARG'
+echo "GIT PUSH..."
+git push
+echo "+++++++DONE!!!+++++++"

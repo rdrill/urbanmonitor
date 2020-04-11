@@ -28,16 +28,7 @@
 
     <v-content>
       <v-container class="fill-height" fluid >
-
-        <v-row>
-            <UpdateGaugeCards msg="Chart!"/>
-          <v-col cols="3">
-             <UpdateTextCards msg="Chart!"/>
-          </v-col>
-          <v-col cols="9">
-             <UpdateChartCards msg="Chart!"/>
-          </v-col>
-        </v-row>
+          <ReviewCards msg="review cards page"/>
       </v-container>
     </v-content>
 
@@ -48,16 +39,14 @@
 </template>
 <script>
 
-import UpdateChartCards from './components/UpdateChartCards.vue'
-import UpdateTextCards from './components/UpdateTextCards.vue'
-import UpdateGaugeCards from './components/UpdateGaugeCards.vue'
+import ReviewCards from './components/ReviewCards.vue'
+// import UpdateTextCards from './components/UpdateTextCards.vue'
+// import UpdateGaugeCards from './components/UpdateGaugeCards.vue'
 
 export default {
   name: 'App',
    components: {
-     UpdateChartCards,
-     UpdateTextCards,
-     UpdateGaugeCards,
+     ReviewCards,
    },
    props: {
      source: String,

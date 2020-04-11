@@ -11,8 +11,8 @@
                 base-color="#d0cdcd"
               >
                 <div class="inner-text">
-                  <p class="display-1" v-bind:style="{ 'color': styler }" >{{value}}</p><br/><br/>
-                  <span v-bind:style="{ 'color': styler }" > {{units}}</span>
+                  <p class="display-1" v-bind:style="{ 'color': styler }" >{{value}}</p>
+                  <span v-bind:style="{ 'color': styler }" >{{units}}</span>
                 </div>
     </VueSvgGauge>
 </template>

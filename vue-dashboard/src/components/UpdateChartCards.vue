@@ -3,7 +3,6 @@
     <v-col cols='12'>
       <v-card>
         <v-card-text>
-          <!-- <Chart :dataframe="preparedData.climate"></Chart> -->
           <line-chart :chart-data="chartData.pollution"  :options="{responsive: true, maintainAspectRatio: false}"></line-chart>
         </v-card-text>
       </v-card>
