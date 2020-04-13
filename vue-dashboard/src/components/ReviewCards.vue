@@ -53,7 +53,7 @@
                 <Informer :multiple="true" :data="[textData.pm_1_0, textData.pm_2_5, textData.pm_10_0]" icon="mdi-scatter-plot-outline" title="ЗАПИЛЕНІСТЬ" ></Informer>
               </v-col>
               <v-col  cols='8' lg='8'>
-                <line-chart :chart-data="chartData.pollution"  :options="withoutLegend"></line-chart>
+                <line-chart :chart-data="chartData.pollution"  :options="withLegend"></line-chart>
               </v-col>
             </v-row>
           </v-card-text>
@@ -95,6 +95,7 @@
     data () {
       return {
         withoutLegend:{responsive: true, maintainAspectRatio: false, legend: {display: false}, elements:{point:{radius:0}}},
+        withLegend:{responsive: true, maintainAspectRatio: false, legend: {display: true}, elements:{point:{radius:0}}},
         chartData:{},
         textData:{},
         chartSets: {

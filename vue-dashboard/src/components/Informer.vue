@@ -31,7 +31,6 @@
       }
     },
     mounted () {
-//      this.textUpdate();
     },
 
     methods: {

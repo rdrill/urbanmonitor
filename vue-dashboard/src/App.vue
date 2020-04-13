@@ -19,16 +19,16 @@
           </v-list-item-content>
         </v-list-item>
       </v-list>
-    </v-navigation-drawer> -->
+    </v-navigation-drawer>
 
-    <!-- <v-app-bar app clipped-left>
+    <v-app-bar app clipped-left>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-toolbar-title>Application</v-toolbar-title>
     </v-app-bar> -->
 
     <v-content>
       <v-container class="fill-height" fluid >
-          <ReviewCards msg="review cards page"/>
+          <Mixer  msg="review cards page"/>
       </v-container>
     </v-content>
 
@@ -39,14 +39,14 @@
 </template>
 <script>
 
-import ReviewCards from './components/ReviewCards.vue'
+import Mixer from './components/Mixer.vue'
 // import UpdateTextCards from './components/UpdateTextCards.vue'
 // import UpdateGaugeCards from './components/UpdateGaugeCards.vue'
 
 export default {
   name: 'App',
    components: {
-     ReviewCards,
+     Mixer,
    },
    props: {
      source: String,
@@ -67,8 +67,5 @@ export default {
 .chartcontainer {
   margin: auto;
   width: 90%;
-}
-.chartjs-render-monitor{
-  height:250px!important;
 }
 </style>

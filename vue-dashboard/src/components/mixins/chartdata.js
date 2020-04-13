@@ -1,10 +1,23 @@
 import {dataRef} from './../../firedb';
 let data = dataRef;
+const getCircularReplacer = () => {
+  const seen = new WeakSet();
+  return (key, value) => {
+    if (typeof value === "object" && value !== null) {
+      if (seen.has(value)) {
+        return;
+      }
+      seen.add(value);
+    }
+    return value;
+  };
+};
+
 export const mixinchart = {
   methods: {
-    objectModify: function(dataobj, snapshot, chartoptions){
+    objectRefresher: function(dataobj){
       var updated = {};
-      //////////////////////////////////////////////////// chart data transformerer hack
+                                                        // chart data transformerer hack
       for (const ia in dataobj) {                       // it is needed to provide the chart's autoupdate
         updated[ia] = {};                               // it shold be replaced by anything less ugly
         for (const ib in dataobj[ia]) {                 // the main idea to make a difference between old and new object
@@ -23,7 +36,11 @@ export const mixinchart = {
           }
         }
       }
-      /////////////////////////////////////////////////////
+      return updated
+    },
+    objectModify: function(dataobj, snapshot, chartoptions){
+      var updated = this.objectRefresher(dataobj);
+
       const shot = snapshot.val()[Object.keys(snapshot.val())[0]];
        for (const property in chartoptions.groupdata) {
         updated[property].labels.push(shot.timestamp.split("T")[1].slice(0, -4));
@@ -64,6 +81,30 @@ export const mixinchart = {
 
       }
     },
+    chartScale: function(scaler,sensor) {
+
+
+      const dataobj = JSON.parse(localStorage.chartBuffer);
+      for (const u in dataobj) {
+        for (const i in dataobj[u]) {
+          for (const o in dataobj[u][i]) {
+            if(dataobj[u][i][o].sname==sensor){
+              const max = Math.max(...dataobj[u][i][o].data),
+                    min = Math.min(...dataobj[u][i][o].data),
+                    delta = max-min;
+              console.log(max,min,delta);
+              for (var p = 0; p < dataobj[u][i][o].data.length; p++) {
+                if(scaler>1){
+                  dataobj[u][i][o].data[p] = (dataobj[u][i][o].data[p]-min+1)*scaler;
+                }
+              }
+            }
+          }
+        }
+      }
+      this.chartData = dataobj;
+
+    },
     getChartData: function(opts) {
       const readlimit  = opts.groupopts.limit;
       const readsample = opts.groupopts.sample;
@@ -81,7 +122,13 @@ export const mixinchart = {
             if(counter%readsample==0){
               timelabels.push(item.timestamp.split("T")[1].slice(0, -4));
               for (const u in opts.groupdata[o].datasets) {
-                 opts.groupdata[o].datasets[u].dlist.push((item[opts.groupdata[o].datasets[u].sensor]).toFixed(3))
+                 const sname = opts.groupdata[o].datasets[u].sensor;
+                 if (sname=="PPM_CO2"){
+                   if(item[sname]<200){
+                     item[sname] = 400;
+                   }
+                 }
+                 opts.groupdata[o].datasets[u].dlist.push((item[sname]).toFixed(3))
               }
             }
           }
@@ -106,7 +153,9 @@ export const mixinchart = {
         }
         console.log("LOG ",compiled_object);
         this.chartData = compiled_object;
-
+        if(this.saveLocally){
+          localStorage.chartBuffer = JSON.stringify(compiled_object,getCircularReplacer());
+        }
       });
     }
   }
