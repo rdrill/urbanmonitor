@@ -81,21 +81,31 @@ export const mixinchart = {
 
       }
     },
-    chartScale: function(scaler,sensor) {
+    chartScale: function(scaler,init) {
 
-
+      
       const dataobj = JSON.parse(localStorage.chartBuffer);
-      for (const u in dataobj) {
-        for (const i in dataobj[u]) {
-          for (const o in dataobj[u][i]) {
-            if(dataobj[u][i][o].sname==sensor){
-              const max = Math.max(...dataobj[u][i][o].data),
-                    min = Math.min(...dataobj[u][i][o].data),
-                    delta = max-min;
-              console.log(max,min,delta);
-              for (var p = 0; p < dataobj[u][i][o].data.length; p++) {
-                if(scaler>1){
-                  dataobj[u][i][o].data[p] = (dataobj[u][i][o].data[p]-min+1)*scaler;
+
+      for (const sc in scaler) {
+        if(init=="init"){
+          scaler[sc] = 0;
+        }else{
+          for (const u in dataobj) {
+            for (const i in dataobj[u]) {
+              for (const o in dataobj[u][i]) {
+                if(dataobj[u][i][o].sname==sc){
+                  const max = Math.max(...dataobj[u][i][o].data),
+                        min = Math.min(...dataobj[u][i][o].data),
+                        delta = max-min;
+                  console.log(max,min,delta);
+                  for (var p = 0; p < dataobj[u][i][o].data.length; p++) {
+                    if(scaler[sc]>1){
+                      dataobj[u][i][o].data[p] = (dataobj[u][i][o].data[p]-min+1)*scaler[sc];
+                    }
+                    if(scaler[sc]<0){
+                      dataobj[u][i][o].data[p] = (dataobj[u][i][o].data[p]-min+1)/Math.abs(scaler[sc]);
+                    }
+                  }
                 }
               }
             }

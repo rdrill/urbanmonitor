@@ -2,10 +2,14 @@
       <div justify="center" align="center" class="main">
         <v-row justify="center" align="center" >
           <v-col cols='3' md='12' lg='2'>
-            <div v-for="item in chartSets.groupdata.whole.datasets" :key="item.sensor">
-              <v-slider v-model="scaler" :id="item.sensor" max="100" min="1" :label="item.sensor" v-on:change="signalChange(item.sensor)" ></v-slider>
-
+            <v-switch
+              v-model="switcher"
+            ></v-switch>
+            <div  v-for="item in chartSets.groupdata.whole.datasets" :key="item.sensor">
+              <v-slider v-if="switcher"  color="#a45d43" track-color="#43a48a" thumb-color="#ffffff" v-model="scaler[item.sensor]"  v-on:change="signalChange" :id="item.sensor" max="100" min="-100" :label="item.sensor" ></v-slider>
+              <v-slider v-else disabled  color="#a45d43" track-color="#43a48a" thumb-color="#ffffff" v-model="scaler[item.sensor]"  v-on:change="signalChange" :id="item.sensor" max="100" min="-100" :label="item.sensor" ></v-slider>
             </div>
+
           </v-col>
           <v-col cols='9' md='12' lg='10'>
             <v-card>
@@ -28,7 +32,8 @@
     },
     data () {
       return {
-        scaler: [],
+        scaler: {},
+        switcher: false,
         withoutLegend:{responsive: true, maintainAspectRatio: false, legend: {display: false}, elements:{point:{radius:0}}},
         withLegend:{responsive: true, maintainAspectRatio: false, legend: {display: true}, elements:{point:{radius:0}}},
         chartData:{},
@@ -93,6 +98,7 @@
       }
     },
     mounted () {
+      this.chartScale(this.scaler,"init");
       this.initCharts();
     },
     methods: {
@@ -100,11 +106,18 @@
         this.getChartData(this.chartSets);
       //  this.baseUpdate(this.chartSets, "auto");
     },
-      signalChange: function(sensor){
-        this.chartScale(this.scaler,sensor);
-        console.log(sensor,this.scaler);
+      signalChange: function(){
+        this.chartScale(this.scaler,"scale");
+        console.log(this.scaler);
       }
     },
+    watch:{
+      switcher:()=>{
+        if (!this.switcher){
+          this.chartScale(this.scaler,"init");
+        }
+      }
+    }
   }
 </script>
 <style>
