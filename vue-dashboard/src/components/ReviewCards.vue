@@ -102,6 +102,7 @@
           groupopts:{
             limit : 50,
             sample: 1,
+            axis:"time"
           },
           groupdata:{
             pollution:{
@@ -187,3 +188,12 @@
     }
   }
 </script>
+<style>
+.chartjs-render-monitor{
+  height:34vh;
+}
+.chartcontainer {
+  margin: auto;
+  width: 90%;
+}
+</style>

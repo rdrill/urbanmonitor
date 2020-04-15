@@ -1,17 +1,19 @@
 <template>
       <div justify="center" align="center" class="main">
         <v-row justify="center" align="center" >
-          <v-col cols='3' md='12' lg='2'>
+          <v-col cols='3' md='12' lg='3'>
+            <span>Зведення по масштабу</span>
             <v-switch
               v-model="switcher"
             ></v-switch>
             <div  v-for="item in chartSets.groupdata.whole.datasets" :key="item.sensor">
-              <v-slider v-if="switcher"  color="#a45d43" track-color="#43a48a" thumb-color="#ffffff" v-model="scaler[item.sensor]"  v-on:change="signalChange" :id="item.sensor" max="100" min="-100" :label="item.sensor" ></v-slider>
-              <v-slider v-else disabled  color="#a45d43" track-color="#43a48a" thumb-color="#ffffff" v-model="scaler[item.sensor]"  v-on:change="signalChange" :id="item.sensor" max="100" min="-100" :label="item.sensor" ></v-slider>
+              <v-subheader class="pl-2 mt-n6 mb-n7 overline">{{item.label}}</v-subheader>
+              <v-slider v-if="switcher"  color="#a45d43" track-color="#43a48a" thumb-color="#ffffff" v-model="scaler[item.sensor]"  v-on:change="signalChange" :id="item.sensor" max="100" min="-100" ></v-slider>
+              <v-slider v-else disabled  color="#a45d43" track-color="#43a48a" thumb-color="#ffffff" v-model="scaler[item.sensor]"  v-on:change="signalChange" :id="item.sensor" max="100" min="-100" ></v-slider>
             </div>
 
           </v-col>
-          <v-col cols='9' md='12' lg='10'>
+          <v-col cols='9' md='12' lg='9'>
             <v-card>
               <v-card-text>
                 <line-chart :chart-data="chartData.whole"  :options="withLegend"></line-chart>
@@ -37,13 +39,14 @@
         withoutLegend:{responsive: true, maintainAspectRatio: false, legend: {display: false}, elements:{point:{radius:0}}},
         withLegend:{responsive: true, maintainAspectRatio: false, legend: {display: true}, elements:{point:{radius:0}}},
         chartData:{},
-        saveLocally:true,
         textData:{},
         firstload: true,
+        buffered: false,
         chartSets: {
           groupopts:{
-            limit : 50,
-            sample: 2,
+            limit : 1000000,
+            sample: 1,
+            axis  : "date",
           },
           groupdata:{
             whole:{
@@ -98,12 +101,12 @@
       }
     },
     mounted () {
-      this.chartScale(this.scaler,"init");
+      //this.chartScale(this.scaler,"init");
       this.initCharts();
     },
     methods: {
       initCharts: function(){
-        this.getChartData(this.chartSets);
+        this.getChartData(this.chartSets,true);
       //  this.baseUpdate(this.chartSets, "auto");
     },
       signalChange: function(){
@@ -112,9 +115,19 @@
       }
     },
     watch:{
-      switcher:()=>{
+      switcher:function(){
         if (!this.switcher){
           this.chartScale(this.scaler,"init");
+        }else{
+          this.chartScale(this.scaler,"zero");
+        }
+      },
+      buffered:function(){
+        if (this.buffered){
+          console.log("buffering done!");
+          let select = 10;
+          let step = 1000;
+          this.timeScale(1,select,step);
         }
       }
     }
@@ -126,6 +139,10 @@
     margin:auto;
   }
   .chartjs-render-monitor{
-    height:80vh;
+    height:100vh;
+  }
+  .chartcontainer {
+    margin: auto;
+    width: 90%;
   }
 </style>

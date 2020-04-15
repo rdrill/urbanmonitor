@@ -1,5 +1,9 @@
 <template>
   <v-app id="inspire">
+    <nav>
+     <router-link to='/'>main</router-link>
+     <router-link to='/mixer'>mixer</router-link>
+   </nav>
     <!-- <v-navigation-drawer v-model="drawer" app clipper>
       <v-list dense>
         <v-list-item link>
@@ -28,25 +32,26 @@
 
     <v-content>
       <v-container class="fill-height" fluid >
-          <Mixer  msg="review cards page"/>
+          <router-view />
       </v-container>
     </v-content>
 
-    <v-footer app>
+    <v-footer align="center" app>
       <span>&copy; <strong>Andrii Yaremych</strong>, 2020</span>
     </v-footer>
   </v-app>
 </template>
 <script>
 
-import Mixer from './components/Mixer.vue'
-// import UpdateTextCards from './components/UpdateTextCards.vue'
+//import Mixer from './components/Mixer.vue'
+//import ReviewCards from './components/ReviewCards.vue'
 // import UpdateGaugeCards from './components/UpdateGaugeCards.vue'
 
 export default {
   name: 'App',
    components: {
-     Mixer,
+     //Mixer,
+    // ReviewCards
    },
    props: {
      source: String,
@@ -62,10 +67,3 @@ export default {
 }
 
 </script>
-
-<style>
-.chartcontainer {
-  margin: auto;
-  width: 90%;
-}
-</style>

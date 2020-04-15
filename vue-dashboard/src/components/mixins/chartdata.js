@@ -40,10 +40,12 @@ export const mixinchart = {
     },
     objectModify: function(dataobj, snapshot, chartoptions){
       var updated = this.objectRefresher(dataobj);
-
+      const axis       = chartoptions.groupopts.axis;
       const shot = snapshot.val()[Object.keys(snapshot.val())[0]];
        for (const property in chartoptions.groupdata) {
-        updated[property].labels.push(shot.timestamp.split("T")[1].slice(0, -4));
+
+        if(axis=="time")updated[property].labels.push(shot.timestamp.split("T")[1].slice(0, -4));
+        if(axis=="date")updated[property].labels.push(shot.timestamp.split("T")[0]);
         var ln = updated[property].datasets.length;
         for (var i = 0; i < ln; i++) {
           const sensorname = updated[property].datasets[i].sname;
@@ -82,11 +84,18 @@ export const mixinchart = {
       }
     },
     chartScale: function(scaler,init) {
+      let dataobj = {};
 
-      
-      const dataobj = JSON.parse(localStorage.chartBuffer);
+      if (localStorage.chartBuffer) {
+        dataobj = JSON.parse(localStorage.chartBuffer);
+      }else{
+        dataobj = this.chartData;
+      }
 
       for (const sc in scaler) {
+        if(init=="zero"){
+          scaler[sc] = 1;
+        }
         if(init=="init"){
           scaler[sc] = 0;
         }else{
@@ -99,7 +108,7 @@ export const mixinchart = {
                         delta = max-min;
                   console.log(max,min,delta);
                   for (var p = 0; p < dataobj[u][i][o].data.length; p++) {
-                    if(scaler[sc]>1){
+                    if(scaler[sc]>=1){
                       dataobj[u][i][o].data[p] = (dataobj[u][i][o].data[p]-min+1)*scaler[sc];
                     }
                     if(scaler[sc]<0){
@@ -113,11 +122,51 @@ export const mixinchart = {
         }
       }
       this.chartData = dataobj;
-
     },
-    getChartData: function(opts) {
+    timeScale: function(scaler,selector,step) {
+      let dataobj = {};
+
+      if (localStorage.chartBuffer) {
+        dataobj = JSON.parse(localStorage.chartBuffer);
+      }else{
+        dataobj = this.chartData;
+      }
+
+          for (const u in dataobj) {
+            let ln =  dataobj[u].labels.length;
+            const position = selector;
+            const shift = ln+step-step;
+            for (const i in dataobj[u].datasets) {
+
+                //  console.log("dramatic debug: ",ln,dataobj[u].labels, scaler, selector,i);
+                  for (let p = 0; p < ln; p++) {
+                    if ( p % scaler !== 0 || p < position || p >= shift ) {
+                      dataobj[u].datasets[i].data.splice(p, scaler);
+                     }
+                    }
+                dataobj[u].datasets[i].data = dataobj[u].datasets[i].data.slice(0, selector);
+                dataobj[u].datasets[i].data = dataobj[u].datasets[i].data.slice(step);
+              }
+
+              for (let f = 0; f < ln; f++) {
+                if ( f % scaler !== 0 ) {
+                  dataobj[u].labels.splice(f, scaler);
+                 }
+                }
+
+            console.log("length before:", dataobj[u].labels.length);
+            dataobj[u].labels = dataobj[u].labels.slice(0, selector);
+            dataobj[u].labels = dataobj[u].labels.slice(step);
+
+            console.log("length after:", dataobj[u].labels.length)
+            }
+
+      this.chartData = dataobj;
+    },
+    getChartData: function(opts,locally) {
       const readlimit  = opts.groupopts.limit;
       const readsample = opts.groupopts.sample;
+      const axis       = opts.groupopts.axis;
       data.orderByKey().limitToLast(readlimit).once('value', snapshot => {
 
         const snapdata = snapshot.val();
@@ -130,7 +179,8 @@ export const mixinchart = {
             counter+=1;
             const item = snapdata[i];
             if(counter%readsample==0){
-              timelabels.push(item.timestamp.split("T")[1].slice(0, -4));
+              if(axis=="time") timelabels.push(item.timestamp.split("T")[1].slice(0, -4));
+              if(axis=="date") timelabels.push(item.timestamp.split("T")[0]);
               for (const u in opts.groupdata[o].datasets) {
                  const sname = opts.groupdata[o].datasets[u].sensor;
                  if (sname=="PPM_CO2"){
@@ -161,10 +211,13 @@ export const mixinchart = {
           }
           compiled_object[o]= confObj;
         }
-        console.log("LOG ",compiled_object);
-        this.chartData = compiled_object;
-        if(this.saveLocally){
+        if(locally){
+          console.log("Object has been buffered");
           localStorage.chartBuffer = JSON.stringify(compiled_object,getCircularReplacer());
+          this.buffered = true;
+        }else{
+          console.log("Object has been rendered directly");
+          this.chartData = compiled_object;
         }
       });
     }
