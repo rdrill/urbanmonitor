@@ -2,10 +2,14 @@
       <div justify="center" align="center" class="main">
         <v-row justify="center" align="center" >
           <v-col cols='3' md='12' lg='3'>
-            <span>Зведення по масштабу</span>
-            <v-switch
-              v-model="switcher"
-            ></v-switch>
+            <span>Масштабування часу</span>
+            <v-subheader class="pl-2 mt-n6 mb-n7 overline">Зсув</v-subheader>
+            <v-slider color="#4ccb92" track-color="#dfdfdf" thumb-color="#ffffff" v-model="timeposition" v-on:change="signalChangeTime" :max="maxdata.whole/2-40" min="2" ></v-slider>
+            <v-subheader class="pl-2 mt-n6 mb-n7 overline">Діапазон</v-subheader>
+            <v-slider color="#4ccb92" track-color="#dfdfdf" thumb-color="#ffffff" v-model="diapasone" v-on:change="signalChangeTime" :max="maxdata.whole/2" min="2" ></v-slider>
+
+            <span>Масштабування даних</span>
+            <v-switch v-model="switcher"></v-switch>
             <div  v-for="item in chartSets.groupdata.whole.datasets" :key="item.sensor">
               <v-subheader class="pl-2 mt-n6 mb-n7 overline">{{item.label}}</v-subheader>
               <v-slider v-if="switcher"  color="#a45d43" track-color="#43a48a" thumb-color="#ffffff" v-model="scaler[item.sensor]"  v-on:change="signalChange" :id="item.sensor" max="100" min="-100" ></v-slider>
@@ -34,19 +38,22 @@
     },
     data () {
       return {
+        maxdata: {},
         scaler: {},
+        diapasone: 1,
+        timeposition: 1,
         switcher: false,
         withoutLegend:{responsive: true, maintainAspectRatio: false, legend: {display: false}, elements:{point:{radius:0}}},
-        withLegend:{responsive: true, maintainAspectRatio: false, legend: {display: true}, elements:{point:{radius:0}}},
+        withLegend:{responsive: true, animation:false, maintainAspectRatio: false, legend: {display: true}, elements:{point:{radius:0}}},
         chartData:{},
         textData:{},
         firstload: true,
         buffered: false,
         chartSets: {
           groupopts:{
-            limit : 1000000,
+            limit : 10000,
             sample: 1,
-            axis  : "date",
+            axis  : "datetime",
           },
           groupdata:{
             whole:{
@@ -72,25 +79,25 @@
                 },
                 {
                   sensor: "temperature",
-                  label: "Temperature",
+                  label: "Температура",
                   color: 'rgba(255, 54, 0, 1)',
                   dlist: [],
                 },
                 {
                   sensor: "humidity",
-                  label: "Humidity",
+                  label: "Вологість",
                   color: 'rgba(0, 186, 255, 1)',
                   dlist: [],
                 },
                 {
                   sensor: "pressure",
-                  label: "Pressure",
+                  label: "Атм. Тиск",
                   color: 'rgba(130, 65, 217, 1)',
                   dlist: [],
                 },
                 {
                   sensor: "PPM_CO2",
-                  label: "Carbon Dioxide",
+                  label: "Діоксид вуглецю",
                   color: 'rgba(87, 255, 119, 1)',
                   dlist: [],
                 }
@@ -101,8 +108,10 @@
       }
     },
     mounted () {
-      //this.chartScale(this.scaler,"init");
+
       this.initCharts();
+      localStorage.chart_Time_Buffer = localStorage.chartBuffer;
+    //  this.chartScale(this.scaler,"init");
     },
     methods: {
       initCharts: function(){
@@ -111,13 +120,19 @@
     },
       signalChange: function(){
         this.chartScale(this.scaler,"scale");
-        console.log(this.scaler);
+      },
+      signalChangeTime: function(){
+        this.timeScale(this.timeposition,this.diapasone);
+        if (this.switcher){
+          this.chartScale(this.scaler,"scale");
+        }
       }
     },
     watch:{
       switcher:function(){
         if (!this.switcher){
-          this.chartScale(this.scaler,"init");
+          localStorage.chart_Scale_Buffer = localStorage.chartBuffer;
+          this.timeScale(this.timeposition,this.diapasone);
         }else{
           this.chartScale(this.scaler,"zero");
         }
@@ -125,9 +140,10 @@
       buffered:function(){
         if (this.buffered){
           console.log("buffering done!");
-          let select = 10;
-          let step = 1000;
-          this.timeScale(1,select,step);
+          this.diapasone=this.maxdata.whole/2-40;
+          this.timeposition=1;
+          this.timeScale(this.timeposition,this.diapasone);
+
         }
       }
     }
@@ -139,7 +155,7 @@
     margin:auto;
   }
   .chartjs-render-monitor{
-    height:100vh;
+    height:60vh!important;
   }
   .chartcontainer {
     margin: auto;

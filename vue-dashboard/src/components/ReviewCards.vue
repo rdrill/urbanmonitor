@@ -133,7 +133,7 @@
               datasets: [
                 {
                   sensor: "temperature",
-                  label: "Temperature",
+                  label: "Температура",
                   color: 'rgba(255, 54, 0, 1)',
                   dlist: [],
                 },
@@ -144,7 +144,7 @@
               datasets: [
                 {
                   sensor: "humidity",
-                  label: "Humidity",
+                  label: "Вологість",
                   color: 'rgba(0, 186, 255, 1)',
                   dlist: [],
                 },
@@ -155,7 +155,7 @@
               datasets: [
                 {
                   sensor: "pressure",
-                  label: "Pressure",
+                  label: "Атм. Тиск",
                   color: 'rgba(130, 65, 217, 1)',
                   dlist: [],
                 }
@@ -166,7 +166,7 @@
               datasets: [
                 {
                   sensor: "PPM_CO2",
-                  label: "Carbon Dioxide",
+                  label: "Діоксид вуглецю",
                   color: 'rgba(87, 255, 119, 1)',
                   dlist: [],
                 }

@@ -44,8 +44,9 @@ export const mixinchart = {
       const shot = snapshot.val()[Object.keys(snapshot.val())[0]];
        for (const property in chartoptions.groupdata) {
 
-        if(axis=="time")updated[property].labels.push(shot.timestamp.split("T")[1].slice(0, -4));
-        if(axis=="date")updated[property].labels.push(shot.timestamp.split("T")[0]);
+        if(axis=="time")     updated[property].labels.push(shot.timestamp.split("T")[1].slice(0, -4));
+        if(axis=="date")     updated[property].labels.push(shot.timestamp.split("T")[0]);
+        if(axis=="datetime") updated[property].labels.push(shot.timestamp.split("T")[0].slice(5)+ " " + shot.timestamp.split("T")[1].slice(0, -4));
         var ln = updated[property].datasets.length;
         for (var i = 0; i < ln; i++) {
           const sensorname = updated[property].datasets[i].sname;
@@ -86,8 +87,8 @@ export const mixinchart = {
     chartScale: function(scaler,init) {
       let dataobj = {};
 
-      if (localStorage.chartBuffer) {
-        dataobj = JSON.parse(localStorage.chartBuffer);
+      if (localStorage.chart_Time_Buffer) {
+        dataobj = JSON.parse(localStorage.chart_Time_Buffer);
       }else{
         dataobj = this.chartData;
       }
@@ -98,7 +99,8 @@ export const mixinchart = {
         }
         if(init=="init"){
           scaler[sc] = 0;
-        }else{
+        }
+    //    else{
           for (const u in dataobj) {
             for (const i in dataobj[u]) {
               for (const o in dataobj[u][i]) {
@@ -119,11 +121,13 @@ export const mixinchart = {
               }
             }
           }
-        }
+      //  }
       }
       this.chartData = dataobj;
+      localStorage.chart_Scale_Buffer = JSON.stringify(dataobj,getCircularReplacer());
     },
-    timeScale: function(scaler,selector,step) {
+    timeScale: function(selector,step) {
+
       let dataobj = {};
 
       if (localStorage.chartBuffer) {
@@ -134,18 +138,34 @@ export const mixinchart = {
 
           for (const u in dataobj) {
             let ln =  dataobj[u].labels.length;
-            const position = selector;
-            const shift = ln+step-step;
+
+
+            let scaler = parseInt((10/ln)*step,10);
+            console.log("dbg", scaler, ln, step);
+            if(scaler<2)  scaler = 2;
+            this.maxdata[u] = ln;
+            //let scaler = 2;
             for (const i in dataobj[u].datasets) {
 
-                //  console.log("dramatic debug: ",ln,dataobj[u].labels, scaler, selector,i);
+              //    console.log("dramatic debug: ",scaler);
+                  let sum = 0;
+                  let hold = [];
                   for (let p = 0; p < ln; p++) {
-                    if ( p % scaler !== 0 || p < position || p >= shift ) {
-                      dataobj[u].datasets[i].data.splice(p, scaler);
-                     }
+                    if ( p % scaler !== 0) {
+                      sum += parseFloat(dataobj[u].datasets[i].data[p],10);
+
+                    //  if(p == scaler-1) console.log("selector:",selector, "step:", step, "selector+step:", selector+step, "ln", ln);
+                    }else{
+
+                      hold.push(sum/scaler);
+                      sum = 0;
                     }
-                dataobj[u].datasets[i].data = dataobj[u].datasets[i].data.slice(0, selector);
-                dataobj[u].datasets[i].data = dataobj[u].datasets[i].data.slice(step);
+                  }
+              //  console.log(hold);
+                //dataobj[u].datasets[i].data.slice(0, dataobj[u].datasets[i].data.length);
+                dataobj[u].datasets[i].data = hold;
+              //  dataobj[u].datasets[i].data = dataobj[u].datasets[i].data.slice(0, selector);
+                dataobj[u].datasets[i].data = dataobj[u].datasets[i].data.slice(selector, selector+step);
               }
 
               for (let f = 0; f < ln; f++) {
@@ -155,13 +175,15 @@ export const mixinchart = {
                 }
 
             console.log("length before:", dataobj[u].labels.length);
-            dataobj[u].labels = dataobj[u].labels.slice(0, selector);
-            dataobj[u].labels = dataobj[u].labels.slice(step);
+            // dataobj[u].labels = dataobj[u].labels.slice(0, selector);
+             dataobj[u].labels = dataobj[u].labels.slice(selector, selector+step);
 
             console.log("length after:", dataobj[u].labels.length)
             }
 
       this.chartData = dataobj;
+      localStorage.chart_Time_Buffer = JSON.stringify(dataobj,getCircularReplacer());
+
     },
     getChartData: function(opts,locally) {
       const readlimit  = opts.groupopts.limit;
@@ -177,14 +199,15 @@ export const mixinchart = {
 
           for (const i in snapdata) {
             counter+=1;
-            const item = snapdata[i];
+            let item = snapdata[i];
             if(counter%readsample==0){
-              if(axis=="time") timelabels.push(item.timestamp.split("T")[1].slice(0, -4));
-              if(axis=="date") timelabels.push(item.timestamp.split("T")[0]);
+              if(axis=="time")     timelabels.push(item.timestamp.split("T")[1].slice(0, -4));
+              if(axis=="date")     timelabels.push(item.timestamp.split("T")[0]);
+              if(axis=="datetime") timelabels.push(item.timestamp.split("T")[0].slice(5)+ " " + item.timestamp.split("T")[1].slice(0, -4));
               for (const u in opts.groupdata[o].datasets) {
                  const sname = opts.groupdata[o].datasets[u].sensor;
                  if (sname=="PPM_CO2"){
-                   if(item[sname]<200){
+                   if(parseInt(item[sname],10)<250){
                      item[sname] = 400;
                    }
                  }
@@ -210,9 +233,11 @@ export const mixinchart = {
             datasets: chartdataset
           }
           compiled_object[o]= confObj;
+          this.maxdata[o]=confObj.labels.length
+          console.log("maxdata",o,this.maxdata[o]);
         }
         if(locally){
-          console.log("Object has been buffered");
+          console.log("Object has been buffered",compiled_object);
           localStorage.chartBuffer = JSON.stringify(compiled_object,getCircularReplacer());
           this.buffered = true;
         }else{
