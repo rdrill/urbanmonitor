@@ -261,6 +261,7 @@ export const mixinchart = {
           if(this.maxdata)this.maxdata[o]=confObj.labels.length
 
         }
+        if(!this.loaded)this.loaded=true;
         if(locally){
           console.log("Object has been buffered",compiled_object);
           localStorage.chartBuffer = JSON.stringify(compiled_object,getCircularReplacer());
@@ -268,6 +269,7 @@ export const mixinchart = {
         }else{
           console.log("Object has been rendered directly");
           this.chartData = compiled_object;
+
         }
       });
     }

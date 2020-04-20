@@ -1,6 +1,7 @@
 <template>
-      <div justify="center" align="center" class="main">
-        <v-row justify="center" align="center" >
+
+      <div  justify="center" align="center" class="main">
+        <v-row v-if="loaded" justify="center" align="center" >
           <v-col cols='3' md='12' lg='3'>
             <span>Масштабування часу</span>
             <v-subheader class="pl-2 mt-n6 mb-n7 overline">Зсув</v-subheader>
@@ -19,34 +20,31 @@
           </v-col>
           <v-col cols='9' md='12' lg='9'>
             <v-card>
-              <v-card-text>
-                <line-chart :chart-data="chartData.whole"  :options="withLegend"></line-chart>
+              <v-card-text class="mixerchart">
+                <line-chart :chart-data="chartData.whole" :options="withLegend"></line-chart>
               </v-card-text>
             </v-card>
           </v-col>
         </v-row>
-        <download-csv
-            class   = "btn btn-default"
-            :data   = "exporter"
-            name    = "filename.csv">
+        <circle8 v-else></circle8>
 
-            Download CSV (This is a slot)
-
-        </download-csv>
       </div>
+
 </template>
 
 <script>
   import LineChart from './LineChart.js'
   import { mixinchart } from './mixins/chartdata'
+  import {Circle8} from 'vue-loading-spinner'
   export default {
     mixins:[mixinchart],
     components: {
       LineChart,
+      Circle8
     },
     data () {
       return {
-        exporter:[],
+        loaded:false,
         maxdata: {},
         scaler: {},
         diapasone: 1,
@@ -121,7 +119,7 @@
       this.initCharts();
       localStorage.chart_Time_Buffer = localStorage.chartBuffer;
     //  this.chartScale(this.scaler,"init");
-      //this.getJSON();
+  //    this.getJSON();
     },
     methods: {
       initCharts: function(){
@@ -153,6 +151,7 @@
           this.diapasone=this.maxdata.whole/2-40;
           this.timeposition=1;
           this.timeScale(this.timeposition,this.diapasone);
+          //this.loaded = true;
 
         }
       }
@@ -164,11 +163,14 @@
     width:90%;
     margin:auto;
   }
-  .chartjs-render-monitor{
-    height:80vh!important;
+  .mixerchart div .chartjs-render-monitor{
+    height:72vh;
   }
   .chartcontainer {
     margin: auto;
     width: 90%;
   }
+  /* .mixerchart{
+    height:80vh;
+  } */
 </style>
