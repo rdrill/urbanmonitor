@@ -47,7 +47,7 @@ export const mixintext = {
           dioxide: {
             value: (shot_B.PPM_CO2),
             delta: (shot_B.PPM_CO2-shot_A.PPM_CO2),
-            name : "CO<sub>2</sub>",
+            name : "CO₂",
             unit : "ppm",
           },
         }

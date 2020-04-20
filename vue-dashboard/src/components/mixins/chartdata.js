@@ -174,16 +174,37 @@ export const mixinchart = {
                  }
                 }
 
-            console.log("length before:", dataobj[u].labels.length);
+          //  console.log("length before:", dataobj[u].labels.length);
             // dataobj[u].labels = dataobj[u].labels.slice(0, selector);
              dataobj[u].labels = dataobj[u].labels.slice(selector, selector+step);
 
-            console.log("length after:", dataobj[u].labels.length)
+        //    console.log("length after:", dataobj[u].labels.length)
             }
 
       this.chartData = dataobj;
       localStorage.chart_Time_Buffer = JSON.stringify(dataobj,getCircularReplacer());
 
+    },
+    getJSON: function() {
+      data.orderByKey().once('value', snapshot => {
+        const snapdata = snapshot.val();
+        let compiled_json = [];
+        for (const o in snapdata) {
+        //  console.log(snapdata[o])
+          compiled_json.push({
+            timestamp  :snapdata[o].timestamp,
+            temperature:snapdata[o].temperature,
+            humidity   :snapdata[o].humidity,
+            pressure   :snapdata[o].pressure,
+            vibration  :snapdata[o].vibration,
+            PM_1_0     :snapdata[o].PM_1_0,
+            PM_2_5     :snapdata[o].PM_2_5,
+            PM_10_0    :snapdata[o].PM_10_0,
+            PPM_CO2    :snapdata[o].PPM_CO2,
+          });
+        }
+        this.exporter = compiled_json;
+      });
     },
     getChartData: function(opts,locally) {
       const readlimit  = opts.groupopts.limit;
@@ -199,13 +220,16 @@ export const mixinchart = {
 
           for (const i in snapdata) {
             counter+=1;
+
             let item = snapdata[i];
             if(counter%readsample==0){
               if(axis=="time")     timelabels.push(item.timestamp.split("T")[1].slice(0, -4));
               if(axis=="date")     timelabels.push(item.timestamp.split("T")[0]);
               if(axis=="datetime") timelabels.push(item.timestamp.split("T")[0].slice(5)+ " " + item.timestamp.split("T")[1].slice(0, -4));
               for (const u in opts.groupdata[o].datasets) {
+
                  const sname = opts.groupdata[o].datasets[u].sensor;
+              //   console.log(o,snapdata[i],sname);
                  if (sname=="PPM_CO2"){
                    if(parseInt(item[sname],10)<250){
                      item[sname] = 400;
@@ -233,8 +257,9 @@ export const mixinchart = {
             datasets: chartdataset
           }
           compiled_object[o]= confObj;
-          this.maxdata[o]=confObj.labels.length
-          console.log("maxdata",o,this.maxdata[o]);
+
+          if(this.maxdata)this.maxdata[o]=confObj.labels.length
+
         }
         if(locally){
           console.log("Object has been buffered",compiled_object);

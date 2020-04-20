@@ -8,6 +8,10 @@ import vuetify from './plugins/vuetify';
 import VueRouter from 'vue-router';
 import routes from './routes';
 
+import JsonCSV from 'vue-json-csv'
+
+Vue.component('downloadCsv', JsonCSV)
+
 Vue.use(Vuetify)
 Vue.use(VueRouter);
 Vue.use(firestorePlugin);

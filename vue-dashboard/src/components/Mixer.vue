@@ -25,6 +25,14 @@
             </v-card>
           </v-col>
         </v-row>
+        <download-csv
+            class   = "btn btn-default"
+            :data   = "exporter"
+            name    = "filename.csv">
+
+            Download CSV (This is a slot)
+
+        </download-csv>
       </div>
 </template>
 
@@ -38,6 +46,7 @@
     },
     data () {
       return {
+        exporter:[],
         maxdata: {},
         scaler: {},
         diapasone: 1,
@@ -112,6 +121,7 @@
       this.initCharts();
       localStorage.chart_Time_Buffer = localStorage.chartBuffer;
     //  this.chartScale(this.scaler,"init");
+      //this.getJSON();
     },
     methods: {
       initCharts: function(){
@@ -155,7 +165,7 @@
     margin:auto;
   }
   .chartjs-render-monitor{
-    height:60vh!important;
+    height:80vh!important;
   }
   .chartcontainer {
     margin: auto;

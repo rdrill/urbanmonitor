@@ -64,8 +64,7 @@
           <v-card-text>
             <v-row align="center" justify="center" >
               <v-col align="center" justify="center"   cols='4' lg='4'>
-                <Gauge :value="textData.dioxide.value" maxval="1000" minval="350" units="ppm"></Gauge>
-
+                <Informer :multiple="true" :data="[textData.dioxide]" icon="mdi-air-filter" title="ДІОКСИД ВУГЛЕЦЮ" ></Informer>
               </v-col>
               <v-col   cols='8' lg='8'>
                 <line-chart :chart-data="chartData.dioxide"  :options="withoutLegend"></line-chart>
@@ -81,7 +80,7 @@
 <script>
   import LineChart from './LineChart.js'
   import Informer  from './Informer.vue'
-  import Gauge     from './Gauge.vue'
+//  import Gauge     from './Gauge.vue'
   import { mixinchart } from './mixins/chartdata'
   import { mixintext } from './mixins/textdata'
   export default {
@@ -89,7 +88,7 @@
     components: {
       LineChart,
       Informer,
-      Gauge
+    //  Gauge
   //    Chart
     },
     data () {
@@ -182,15 +181,15 @@
     },
     methods: {
       initCharts: function(){
-        this.getChartData(this.chartSets);
-        this.baseUpdate(this.chartSets, "auto");
+        this.getChartData(this.chartSets,false);
+      //  this.baseUpdate(this.chartSets, "auto");
       }
     }
   }
 </script>
 <style>
 .chartjs-render-monitor{
-  height:34vh;
+  height:34vh!important;
 }
 .chartcontainer {
   margin: auto;
