@@ -45,9 +45,9 @@
       </v-container>
     </v-content>
 
-    <v-footer padless dense>
-    <v-col class="text-center" cols="12" >
-      {{ new Date().getFullYear() }} — <strong>Andrii Yaremych</strong>
+    <v-footer padless class="densefooter">
+    <div style="width:100%" align="center" centered >
+      {{ new Date().getFullYear() }} — <strong>Andrii Yaremych, UKMA</strong>
 
        <v-tooltip top>
          <template v-slot:activator="{ on }">
@@ -58,7 +58,7 @@
          <span>Переглянути проект на GitHub</span>
        </v-tooltip>
 
-    </v-col>
+    </div>
   </v-footer>
   </v-app>
 </template>
@@ -111,5 +111,9 @@ export default {
 .apptitle{
   width:200px;
   font-size:1.2em!important;
+}
+.densefooter{
+  max-height:40px;
+  font-size:0.8em;
 }
 </style>
