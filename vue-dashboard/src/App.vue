@@ -51,7 +51,7 @@
 
        <v-tooltip top>
          <template v-slot:activator="{ on }">
-           <v-btn class="mx-4" dark icon v-on="on" >
+           <v-btn href="https://github.com/rdrill/urbanmonitor" target="_blank" class="mx-4" dark icon v-on="on" >
               <v-icon size="24px">mdi-github</v-icon>
             </v-btn>
          </template>
