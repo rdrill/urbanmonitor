@@ -9,12 +9,12 @@
             </div>
           </div>
           <div v-else>
-            <v-list-item-title class="display-1 mb-1">{{data.value}} <p class="title inline">{{data.unit}}</p></v-list-item-title>
+            <v-list-item-title :class="data.customclasses"  >{{data.value}} <p class="title inline" >{{data.unit}}</p></v-list-item-title>
             <v-list-item-subtitle>
               динаміка:  <br/><b>{{data.delta}}</b> {{data.unit}} / год.
-              <v-icon v-if="delta < 0" class="subtitle-1"> mdi-arrow-down</v-icon>
-              <v-icon v-if="delta > 0" class="subtitle-1"> mdi-arrow-up</v-icon>
-              <v-icon v-if="delta == 0" class="subtitle-1"> mdi-arrow-up-down</v-icon>
+              <v-icon v-if="data.delta < 0" class="subtitle-1"> mdi-arrow-down</v-icon>
+              <v-icon v-if="data.delta > 0" class="subtitle-1"> mdi-arrow-up</v-icon>
+              <v-icon v-if="data.delta == 0" class="subtitle-1"> mdi-arrow-up-down</v-icon>
             </v-list-item-subtitle>
           </div>
 

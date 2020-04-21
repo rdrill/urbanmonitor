@@ -21,7 +21,7 @@
          <download-csv
              class   = "btn btn-default"
              :data   = "exporter"
-             :name    = "new Date().getFullYear()+ '_' + new Date().getMonth()+ '_' + new Date().getDate() +'_'+ new Date().getTime()">
+             :name    = "new Date().getFullYear()+ '_' + new Date().getMonth()+ '_' + new Date().getDate() +'_'+ new Date().getTime()+'.csv'">
 
              <v-btn color="green" class="ma-2 white--text" ref="downloader">
                Завантажити дані

@@ -7,7 +7,7 @@
             <v-card-text>
               <v-row align="center" justify="center" >
                 <v-col align="center" justify="center"  cols='4' lg='5'>
-                  <Informer :data="textData.temperature" icon="mdi-thermometer" title="ТЕМПЕРАТУРА" ></Informer>
+                  <Informer v-if="infoisready" :data="textData.temperature" icon="mdi-thermometer" title="ТЕМПЕРАТУРА" ></Informer>
                 </v-col>
                 <v-col class="dashboardchart"  cols='8' lg='7'>
                   <line-chart :chart-data="chartData.temperature"  :options="withoutLegend"></line-chart>
@@ -21,7 +21,7 @@
             <v-card-text>
               <v-row align="center" justify="center" >
                 <v-col align="center" justify="center"   cols='4' lg='5'>
-                  <Informer :data="textData.humidity" icon="mdi-water-percent" title="ВІДН. ВОЛОГІСТЬ" ></Informer>
+                  <Informer v-if="infoisready" :data="textData.humidity" icon="mdi-water-percent" title="ВІДН. ВОЛОГІСТЬ" ></Informer>
                 </v-col>
                 <v-col class="dashboardchart" cols='8' lg='7'>
                   <line-chart :chart-data="chartData.humidity"  :options="withoutLegend"></line-chart>
@@ -35,7 +35,7 @@
             <v-card-text>
               <v-row align="center" justify="center" >
                 <v-col align="center" justify="center"   cols='4' lg='5'>
-                  <Informer :data="textData.pressure" icon="mdi-weather-windy" title="АТМ. ТИСК" ></Informer>
+                  <Informer v-if="infoisready" :data="textData.pressure" icon="mdi-weather-windy" title="АТМ. ТИСК" ></Informer>
                 </v-col>
                 <v-col class="dashboardchart"  cols='8' lg='7'>
                   <line-chart :chart-data="chartData.pressure"  :options="withoutLegend"></line-chart>
@@ -51,7 +51,7 @@
             <v-card-text>
               <v-row align="center" justify="center" >
                 <v-col align="center" justify="center"  cols='4' lg='4'>
-                  <Informer :multiple="true" :data="[textData.pm_1_0, textData.pm_2_5, textData.pm_10_0]" icon="mdi-scatter-plot-outline" title="ЗАПИЛЕНІСТЬ" ></Informer>
+                  <Informer v-if="infoisready" :multiple="true" :data="[textData.pm_1_0, textData.pm_2_5, textData.pm_10_0]" icon="mdi-scatter-plot-outline" title="ЗАПИЛЕНІСТЬ" ></Informer>
                 </v-col>
                 <v-col class="dashboardchart"  cols='8' lg='8'>
                   <line-chart :chart-data="chartData.pollution"  :options="withLegend"></line-chart>
@@ -65,7 +65,7 @@
             <v-card-text>
               <v-row align="center" justify="center" >
                 <v-col align="center" justify="center"   cols='4' lg='4'>
-                  <Informer :multiple="true" :data="[textData.dioxide]" icon="mdi-air-filter" title="ДІОКСИД ВУГЛЕЦЮ" ></Informer>
+                  <Informer v-if="infoisready" :multiple="true" :data="[textData.dioxide]" icon="mdi-air-filter" title="ДІОКСИД ВУГЛЕЦЮ" ></Informer>
                 </v-col>
                 <v-col  class="dashboardchart"  cols='8' lg='8'>
                   <line-chart :chart-data="chartData.dioxide"  :options="withoutLegend"></line-chart>
@@ -99,6 +99,7 @@
     data () {
       return {
         loaded:false,
+        infoisready: false,
         withoutLegend:{responsive: true, maintainAspectRatio: false, legend: {display: false}, elements:{point:{radius:0}}},
         withLegend:{responsive: true, maintainAspectRatio: false, legend: {display: true}, elements:{point:{radius:0}}},
         chartData:{},
@@ -188,7 +189,7 @@
     methods: {
       initCharts: function(){
         this.getChartData(this.chartSets,false);
-      //  this.baseUpdate(this.chartSets, "auto");
+        this.baseUpdate(this.chartSets, "auto");
       }
     }
   }
