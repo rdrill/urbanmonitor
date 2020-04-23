@@ -47,12 +47,19 @@
   padding: 0px 0px 0px 0px;
   margin : 10px 0px 10px 0px;
 }
+.markdown h1, h2{
+  margin : 40px 0px 15px 0px!important;
+}
+.markdown h3{
+  margin : 5px 0px 20px 0px!important;
+}
 .markdown * code{
   background-color: rgb(19, 19, 19);
   color: rgb(65, 180, 196);
 }
 .markdown * img{
-  width: 15%;
+  width: 30%;
+  margin : -10px 0px -5px 0px;
 }
 .markdown table{
   border-collapse: collapse;
@@ -69,5 +76,8 @@
 }
 .markdown table tr:nth-child(even){
   background-color: #212020;
+}
+img[alt='License: MIT'] {
+  width: 75px;
 }
 </style>

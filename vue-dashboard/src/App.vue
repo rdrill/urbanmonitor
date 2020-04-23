@@ -9,12 +9,12 @@
           hide-on-scroll
         >
 
-       <v-toolbar-title class="apptitle"><font color="#4bceff">U</font>KMA <font color="#4bceff">M</font>ONITOR</v-toolbar-title>
-
+       <v-toolbar-title class="apptitle"><font color="#4bceff">UAQM</font></v-toolbar-title>
 
        <v-tabs color="#4bceff" class="tabscontainer" centered>
                  <v-tab to='/'>Панель моніторингу</v-tab>
                  <v-tab to='/mixer'>Мікшер даних</v-tab>
+                 <v-tab to='/about'>Опис</v-tab>
        </v-tabs>
 
        <div v-if="dataisready">
@@ -31,7 +31,7 @@
          </JsonCSV>
        </div>
        <div v-else>
-         <v-btn color="#3497de" class="ma-2 white--text" @click="prepareData">
+         <v-btn color="#43a0e3" class="ma-2 white--text" @click="prepareData">
            Підготувати дані
            <v-icon v-if="datainprocess" right dark>mdi-progress-clock</v-icon>
            <v-icon v-else right dark>mdi-cloud</v-icon>
