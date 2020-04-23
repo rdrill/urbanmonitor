@@ -18,7 +18,7 @@
        </v-tabs>
 
        <div v-if="dataisready">
-         <download-csv
+         <JsonCSV
              class   = "btn btn-default"
              :data   = "exporter"
              :name    = "new Date().getFullYear()+ '_' + new Date().getMonth()+ '_' + new Date().getDate() +'_'+ new Date().getTime()+'.csv'">
@@ -28,7 +28,7 @@
                <v-icon right dark>mdi-cloud-download</v-icon>
              </v-btn>
 
-         </download-csv>
+         </JsonCSV>
        </div>
        <div v-else>
          <v-btn color="#3497de" class="ma-2 white--text" @click="prepareData">
@@ -68,11 +68,12 @@
 
 
 import { mixinchart } from './components/mixins/chartdata'
+import JsonCSV from 'vue-json-csv'
 export default {
   name: 'App',
   mixins:[mixinchart],
    components: {
-  //  Circle8
+     JsonCSV,
    },
    props: {
      source: String,
