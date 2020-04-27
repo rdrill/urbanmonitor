@@ -1,5 +1,7 @@
 # UKMA AIR QUALITY MONITOR
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+
 ESP32 based air quality monitoring device with Firebase connection and VUE based dashboard.
 
 [DEMO](https://urbanmonitor-d7a3b.firebaseapp.com/)
