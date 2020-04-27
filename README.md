@@ -8,8 +8,7 @@ Hardware part: ESP32
 Firmware part: Arduino with ESP32 core
 Web software part: VUE.js
 
-![dashboard](https://imgur.com/PLD6aGn.png  | width=600)
-
+<img src="https://imgur.com/PLD6aGn.png" width="600">
 
 
 ***sensors used in this project***
