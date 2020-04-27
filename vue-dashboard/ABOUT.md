@@ -17,6 +17,7 @@ UU:::::U     U:::::UUK:::::::K   K::::::KM:::::::::M         M:::::::::M        
   UU:::::::::::::UU  K:::::::K    K:::::KM::::::M               M::::::M  A:::::A               A:::::A                                                 
     UU:::::::::UU    K:::::::K    K:::::KM::::::M               M::::::M A:::::A                 A:::::A                                                
       UUUUUUUUU      KKKKKKKKK    KKKKKKKMMMMMMMM               MMMMMMMMAAAAAAA                   AAAAAAA                                               
+
                AAA               IIIIIIIIIIRRRRRRRRRRRRRRRRR                                                                                            
               A:::A              I::::::::IR::::::::::::::::R                                                                                           
              A:::::A             I::::::::IR::::::RRRRRR:::::R                                                                                          
@@ -33,6 +34,7 @@ UU:::::U     U:::::UUK:::::::K   K::::::KM:::::::::M         M:::::::::M        
   A:::::A               A:::::A  I::::::::IR::::::R     R:::::R                                                                                         
  A:::::A                 A:::::A I::::::::IR::::::R     R:::::R                                                                                         
 AAAAAAA                   AAAAAAAIIIIIIIIIIRRRRRRRR     RRRRRRR                                                                                         
+
      QQQQQQQQQ      UUUUUUUU     UUUUUUUU               AAA               LLLLLLLLLLL             IIIIIIIIIITTTTTTTTTTTTTTTTTTTTTTTYYYYYYY       YYYYYYY
    QQ:::::::::QQ    U::::::U     U::::::U              A:::A              L:::::::::L             I::::::::IT:::::::::::::::::::::TY:::::Y       Y:::::Y
  QQ:::::::::::::QQ  U::::::U     U::::::U             A:::::A             L:::::::::L             I::::::::IT:::::::::::::::::::::TY:::::Y       Y:::::Y
@@ -49,8 +51,9 @@ Q:::::::QQ::::::::Q  U:::::::UUU:::::::U    A:::::A             A:::::A   LL::::
  QQ::::::::::::::Q    UU:::::::::::::UU    A:::::A               A:::::A  L::::::::::::::::::::::LI::::::::I      T:::::::::T          YYYY:::::YYYY    
    QQ:::::::::::Q       UU:::::::::UU     A:::::A                 A:::::A L::::::::::::::::::::::LI::::::::I      T:::::::::T          Y:::::::::::Y    
      QQQQQQQQ::::QQ       UUUUUUUUU      AAAAAAA                   AAAAAAALLLLLLLLLLLLLLLLLLLLLLLLIIIIIIIIII      TTTTTTTTTTT          YYYYYYYYYYYYY    
-MMMMMMMM     Q:::::Q   MMMMMMMM     OOOOOOOOO     NNNNNNNN        NNNNNNNNIIIIIIIIIITTTTTTTTTTTTTTTTTTTTTTT     OOOOOOOOO     RRRRRRRRRRRRRRRRR         
-M:::::::M     QQQQQQ  M:::::::M   OO:::::::::OO   N:::::::N       N::::::NI::::::::IT:::::::::::::::::::::T   OO:::::::::OO   R::::::::::::::::R        
+            Q:::::Q                                                                                                                                    
+MMMMMMMM      QQQQQQ   MMMMMMMM     OOOOOOOOO     NNNNNNNN        NNNNNNNNIIIIIIIIIITTTTTTTTTTTTTTTTTTTTTTT     OOOOOOOOO     RRRRRRRRRRRRRRRRR         
+M:::::::M             M:::::::M   OO:::::::::OO   N:::::::N       N::::::NI::::::::IT:::::::::::::::::::::T   OO:::::::::OO   R::::::::::::::::R        
 M::::::::M           M::::::::M OO:::::::::::::OO N::::::::N      N::::::NI::::::::IT:::::::::::::::::::::T OO:::::::::::::OO R::::::RRRRRR:::::R       
 M:::::::::M         M:::::::::MO:::::::OOO:::::::ON:::::::::N     N::::::NII::::::IIT:::::TT:::::::TT:::::TO:::::::OOO:::::::ORR:::::R     R:::::R      
 M::::::::::M       M::::::::::MO::::::O   O::::::ON::::::::::N    N::::::N  I::::I  TTTTTT  T:::::T  TTTTTTO::::::O   O::::::O  R::::R     R:::::R      
@@ -64,7 +67,7 @@ M::::::M     MMMMM     M::::::MO::::::O   O::::::ON::::::N     N:::::::::N  I:::
 M::::::M               M::::::MO:::::::OOO:::::::ON::::::N      N::::::::NII::::::II      TT:::::::TT      O:::::::OOO:::::::ORR:::::R     R:::::R      
 M::::::M               M::::::M OO:::::::::::::OO N::::::N       N:::::::NI::::::::I      T:::::::::T       OO:::::::::::::OO R::::::R     R:::::R      
 M::::::M               M::::::M   OO:::::::::OO   N::::::N        N::::::NI::::::::I      T:::::::::T         OO:::::::::OO   R::::::R     R:::::R      
-MMMMMMMM               MMMMMMMM     OOOOOOOOO     NNNNNNNN         NNNNNNNIIIIIIIIII      TTTTTTTTTTT           OOOOOOOOO     RRRRRRRR     RRRRRRR
+MMMMMMMM               MMMMMMMM     OOOOOOOOO     NNNNNNNN         NNNNNNNIIIIIIIIII      TTTTTTTTTTT           OOOOOOOOO     RRRRRRRR     RRRRRRR      
 ```
 
 # Моніторинг якості повітря та мікроклімату

@@ -71,8 +71,8 @@
 }
 .markdown pre code{
   padding: 5px;
-  font-size: 6px;
-  line-height: 5px;
+  font-size: 0.5vw;
+  line-height: 1em;
 }
 .markdown table th{
   padding: 5px;
