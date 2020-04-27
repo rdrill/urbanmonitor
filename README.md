@@ -4,11 +4,13 @@ ESP32 based air quality monitoring device with Firebase connection and VUE based
 
 [DEMO](https://urbanmonitor-d7a3b.firebaseapp.com/)
 
-![dashboard](https://imgur.com/PLD6aGn.png)
-
 Hardware part: ESP32
 Firmware part: Arduino with ESP32 core
 Web software part: VUE.js
+
+![dashboard](https://imgur.com/PLD6aGn.png  | width=600)
+
+
 
 ***sensors used in this project***
 - [BME280](https://www.infinite-electronic.ru/datasheet/97-BME280.pdf)
@@ -18,6 +20,6 @@ Web software part: VUE.js
 
 
 ## TODO
-  - more complex readmy
+  - more complex readme
   - nice code inside the firmware .ino
   - english translation
