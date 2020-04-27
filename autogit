@@ -4,7 +4,7 @@ COMMIT_MSG="autoupdate"
 
 if [ -z "$1" ]
   then
-    COMMIT_ARG=$COMMIT_MSG
+    COMMIT_ARG="$COMMIT_MSG"
 fi
 echo "+++++++START!+++++++"
 echo "GIT ADD ....."

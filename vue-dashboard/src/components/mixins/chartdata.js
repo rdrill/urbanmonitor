@@ -156,8 +156,8 @@ export const mixinchart = {
 
                     //  if(p == scaler-1) console.log("selector:",selector, "step:", step, "selector+step:", selector+step, "ln", ln);
                     }else{
-
-                      hold.push(sum/scaler);
+                    //  console.log('parameter',p,scaler)
+                      hold.push(sum/(scaler-1));
                       sum = 0;
                     }
                   }

@@ -1,24 +1,10 @@
-# umonitor-vue
+# UKMA AIR QUALITY MONITOR
 
-## Project setup
-```
-npm install
-```
+Hardware part: ESP32
+Firmware part: Arduino with ESP32 core
+Web software part: VUE.js
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+##TODO
+  - more complex readmy
+  - nice code inside the firmware .ino
+  - english translation 

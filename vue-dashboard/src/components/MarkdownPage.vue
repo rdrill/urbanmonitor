@@ -49,6 +49,7 @@
 }
 .markdown h1, h2{
   margin : 40px 0px 15px 0px!important;
+  text-align:center;
 }
 .markdown h3{
   margin : 5px 0px 20px 0px!important;
@@ -67,6 +68,11 @@
 .markdown table tr td{
   padding: 5px;
   border: 1px solid rgb(24, 24, 24);
+}
+.markdown pre code{
+  padding: 5px;
+  font-size: 6px;
+  line-height: 5px;
 }
 .markdown table th{
   padding: 5px;
