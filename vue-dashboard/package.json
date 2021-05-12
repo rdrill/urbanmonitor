@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.9.2",
-    "chart.js": "^2.9.3",
+    "chart.js": "^2.9.4",
     "core-js": "^3.6.4",
     "deepmerge": "^4.2.2",
     "firebase": "^7.14.0",
